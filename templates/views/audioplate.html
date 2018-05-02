@@ -1,0 +1,46 @@
+{% extends "layouts/default.html" %}
+
+{% macro albumList(statusName) %}
+{% for status in data.statuses %}
+    {% if status.name == statusName %}
+        <h3>{{ status.name }}</h3>
+        <div class="row">
+            {% for album in data.albums %}
+                {% if status.id == album.status %}
+                    <div class="col-md-2" style="min-height: 270px;">
+                        <img src="{{ album._.image.fit(180,180) }}" class="img">
+                            <p>
+                        {% for artist in data.artists %}
+                            {% if artist.id == album.artist %}
+                                <!-- <a href="https://rateyourmusic.com/artist/{{ artist.slug }}" target="_blank"><strong>{{ artist.name }}</strong></a><br> -->
+                                <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
+                            {% elseif (album.artist | length) > 1 %}
+                                {% for item in album.artist %}
+                                    {% if item == artist.id %}
+                                        <!-- <a href="https://rateyourmusic.com/artist/{{ artist.slug }}" target="_blank"><strong>{{ artist.name }}</strong></a><br> -->
+                                        <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ album.name }} ({{ album._.year.format("YYYY") }})</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endfor %}
+{% endmacro %}
+
+{% block content %}
+<div class="container">
+    {{ albumList('New - Curious') }}
+    {{ albumList('New - Interested') }}
+    {{ albumList('New - Great') }}
+    {{ albumList('New - Excellent') }}
+    {{ albumList('Known - Curious') }}
+    {{ albumList('Known - Interested') }}
+    {{ albumList('Known - Great') }}
+    {{ albumList('Known - Excellent') }}
+</div>
+{% endblock %}

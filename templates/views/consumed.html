@@ -1,12 +1,17 @@
 {% extends "layouts/default.html" %}
 
-{% macro albumList(statusName) %}
+{% macro albumList(newArtist,statusName) %}
 {% for status in data.statuses %}
     {% if status.name == statusName %}
-        <h3>{{ status.name }}</h3>
+        <h3>{{ newArtist }} - {{ status.name }}</h3>
+        {% if newArtist == 'New' %}
+            {% set isNewArtist = true %}
+        {% else %}
+            {% set isNewArtist = false %}
+        {% endif %}
         <div class="row">
             {% for album in data.albums %}
-                {% if status.id == album.status %}
+                {% if (status.id == album.status) and (album.newArtist == isNewArtist) %}
                     <div class="col-md-2" style="min-height: 270px;">
                         <img src="{{ album._.image.fit(180,180) }}" class="img">
                             <p>
@@ -34,8 +39,15 @@
 
 {% block content %}
 <div class="container">
-    {{ albumList('New - Wonderful') }}
-    {{ albumList('Known - Wonderful') }}
-    {{ albumList('Known - Not Quite Wonderful --]') }}
+    {{ albumList('New','Wonderful') }}
+    {{ albumList('New','Not Quite Wonderful --]') }}
+    {{ albumList('New','Great, Not Gripping --]') }}
+    {{ albumList('New','Decent Stuff --]') }}
+    {{ albumList('New','Not Interested --]') }}
+    {{ albumList('Known','Wonderful') }}
+    {{ albumList('Known','Not Quite Wonderful --]') }}
+    {{ albumList('Known','Great, Not Gripping --]') }}
+    {{ albumList('Known','Decent Stuff --]') }}
+    {{ albumList('Known','Not Interested --]') }}
 </div>
 {% endblock %}

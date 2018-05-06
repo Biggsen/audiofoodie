@@ -5,6 +5,7 @@
 		{% if data.artist %}
 			<p><a href="/artist">Back to artists</a></p>
 			<h3>{{ data.artist.name }}</h3>
+			<a href="https://rateyourmusic.com/artist/{{ data.artist.slug }}" target="_blank"><strong>Rate Your Music profile</strong></a>
 			<h4>Albums</h4>
 			<div class="row">
 				{% for album in data.albums %}
@@ -16,6 +17,9 @@
 								<p>{{ status.name }}</p>
 							{% endif %}
 						{% endfor %}
+						{% if album.newArtist == true %}
+							<p>The first album I heard.</p>
+						{% endif %}
 						<a href="https://genius.com/albums/{{ data.artist.slug }}/{{ album.key }}" target="_blank">Lyrics</a>
 	                </div>
                 {% endfor %}

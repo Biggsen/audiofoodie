@@ -16,6 +16,7 @@ ArtistAlbum.add({
     image: { type: Types.CloudinaryImage },
     status: { type: Types.Relationship, ref: 'Status', many: true },
     artist: { type: Types.Relationship, ref: 'Artist', many: true },
+    newArtist: { type: Types.Boolean, label: 'Is this a new artist?' },
     curiousDate: { type: Types.Date},
     notInterestedDate: { type: Types.Date},
     interestedDate: { type: Types.Date},
@@ -25,6 +26,7 @@ ArtistAlbum.add({
     excellentDate: { type: Types.Date},
     notQuiteWonderfulDate: { type: Types.Date},
     wonderfulDate: { type: Types.Date},
+    movement: { type: Types.Boolean, label: 'Flag movement' },
 });
 
 ArtistAlbum.relationship({ ref: 'Artist', path: 'artists', refPath: 'album' });

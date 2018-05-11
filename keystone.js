@@ -12,8 +12,8 @@ var nunjucks = require('nunjucks');
 // and documentation.
 
 keystone.init({
-	'name': 'Keystone Test A',
-	'brand': 'Keystone Test A',
+	'name': 'Audio Foodie',
+	'brand': 'AudioFoodie',
 
 	'sass': 'public',
 	'static': 'public',

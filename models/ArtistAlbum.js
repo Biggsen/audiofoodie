@@ -30,5 +30,5 @@ ArtistAlbum.add({
 });
 
 ArtistAlbum.relationship({ ref: 'Artist', path: 'artists', refPath: 'album' });
-
+ArtistAlbum.defaultColumns = 'name, year, status';
 ArtistAlbum.register();

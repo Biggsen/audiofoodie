@@ -41,6 +41,7 @@ exports = module.exports = function (app) {
     //app.all('/contact', routes.views.contact);
 	app.all('/audioplate', routes.views.audioplate);
 	app.all('/consumed', routes.views.consumed);
+	app.all('/curious', routes.views.curious);
 	app.all('/artist/:artist?', routes.views.artist);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:

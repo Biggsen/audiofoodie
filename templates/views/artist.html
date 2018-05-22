@@ -5,7 +5,7 @@
 		{% if data.artist %}
 			<p><a href="/artist">Back to artists</a></p>
 			<h3>{{ data.artist.name }}</h3>
-			<a href="https://rateyourmusic.com/artist/{{ data.artist.slug }}" target="_blank"><strong>Rate Your Music profile</strong></a>
+			<a href="#" data-url="https://rateyourmusic.com/artist/{{ data.artist.slug }}" class="js-check404"><strong>Rate Your Music profile</strong></a>
 			<h4>Albums</h4>
 			<div class="row">
 				{% for album in data.albums %}
@@ -35,4 +35,43 @@
 			</ul>
 		{% endif %}
 	</div>
+{% endblock %}
+
+{% block js %}
+ <script>
+
+ 	$( document ).ready(function() {
+	    console.log( "ready!" );
+
+	 	$('.js-check404').click(function(el){
+	 		console.log('clicked');
+	 		var url = $(this).data('url');
+	 		console.log(url);
+	 		UrlExists(url, function(status){
+			    if(status === 200){
+			       console.log('200');
+			    }
+			    else if(status === 404){
+			       console.log('404');
+			    }
+			});
+	 		return false;
+	 	})
+	});
+
+
+ 	function UrlExists(url, cb){
+	    jQuery.ajax({
+	        url:      url,
+	        dataType: 'text',
+	        type:     'GET',
+	        complete:  function(xhr){
+	            if(typeof cb === 'function')
+	               cb.apply(this, [xhr.status]);
+	        }
+	    });
+	}
+
+ </script>
+
 {% endblock %}

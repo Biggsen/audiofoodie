@@ -5,7 +5,7 @@
 		{% if data.artist %}
 			<p><a href="/artist">Back to artists</a></p>
 			<h3>{{ data.artist.name }}</h3>
-			<a href="#" data-url="https://rateyourmusic.com/artist/{{ data.artist.slug }}" class="js-check404"><strong>Rate Your Music profile</strong></a>
+			<a href="#" data-url="https://rateyourmusic.com/artist/{{ data.artist.slug }}" data-artist="{{ data.artist.slug }}" class="js-check404"><strong>Rate Your Music profile</strong></a>
 			<h4>Albums</h4>
 			<div class="row">
 				{% for album in data.albums %}
@@ -46,13 +46,18 @@
 	 	$('.js-check404').click(function(el){
 	 		console.log('clicked');
 	 		var url = $(this).data('url');
+	 		var artist = $(this).data('artist');
 	 		console.log(url);
 	 		UrlExists(url, function(status){
+	 			console.log(status);
 			    if(status === 200){
-			       console.log('200');
-			    }
-			    else if(status === 404){
+			       window.open(url, '_blank');
+			    } else {
 			       console.log('404');
+			       console.log(artist);
+			       artist = artist.replace(/-/gi, '_');
+			       console.log(artist);
+				   window.open('https://rateyourmusic.com/artist/' + artist,'_blank');
 			    }
 			});
 	 		return false;
@@ -63,9 +68,12 @@
  	function UrlExists(url, cb){
 	    jQuery.ajax({
 	        url:      url,
-	        dataType: 'text',
+	        timeout: 2000,
+	        dataType: 'jsonp',
 	        type:     'GET',
+	        crossDomain: true,
 	        complete:  function(xhr){
+	        	console.log(xhr);
 	            if(typeof cb === 'function')
 	               cb.apply(this, [xhr.status]);
 	        }

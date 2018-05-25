@@ -1,0 +1,13 @@
+{% extends "layouts/default.html" %}
+{% import "macros/macros.html" as macro %}
+
+{% block content %}
+<div class="container">
+    <h3>
+        <span class="glyphicon glyphicon-ok"></span>
+        On the menu
+    </h3>
+    <h4>Absolutely wonderful music. These are my favourites.</h4>
+    {{ macro.albumList(data,'Wonderful') }}
+</div>
+{% endblock %}

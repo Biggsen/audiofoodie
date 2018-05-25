@@ -1,44 +1,66 @@
 {% extends "layouts/default.html" %}
-
-{% macro albumList(statusName) %}
-{% for status in data.statuses %}
-    {% if status.name == statusName %}
-        <div class="row">
-            {% for album in data.albums %}
-                {% if (status.id == album.status) %}
-                    <div class="col-md-2" style="min-height: 270px;">
-                        <img src="{{ album._.image.fit(180,180) }}" class="img">
-                            <p>
-                        {% for artist in data.artists %}
-                            {% if artist.id == album.artist %}
-                                <a href="/artist/{{ artist.slug }}">
-                                    <strong>
-                                        {{ artist.name }}
-                                        {% if album.newArtist %}
-                                        (New)
-                                        {% endif %}
-                                    </strong>
-                                </a><br>
-                            {% elseif (album.artist | length) > 1 %}
-                                {% for item in album.artist %}
-                                    {% if item == artist.id %}
-                                        <!-- <a href="https://rateyourmusic.com/artist/{{ artist.slug }}" target="_blank"><strong>{{ artist.name }}</strong></a><br> -->
-                                        <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        {% endfor %}
-                        {{ album.name }} ({{ album._.year.format("YYYY") }})</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endfor %}
-{% endmacro %}
+{% import "macros/macros.html" as macro %}
 
 {% block content %}
 <div class="container">
-    {{ albumList('Curious') }}
+    <h3>
+        <span class="glyphicon glyphicon-headphones"></span>
+        On my plate
+    </h3>
+    <h4>I'm curious about this.</h4>
+    {{ macro.albumList(data,'Curious') }}
+    <h3>
+        <span class="glyphicon glyphicon-trash"></span>
+        In the bin
+    </h3>
+    <h4>Not interesting at all.</h4>
+    {{ macro.albumList(data,'Not Interested --]') }}
 </div>
+{% endblock %}
+
+{% block js %}
+ <script>
+
+    $( document ).ready(function() {
+        console.log( "ready!" );
+
+        $('.js-check404').click(function(el){
+            console.log('clicked');
+            var url = $(this).data('url');
+            var artist = $(this).data('artist');
+            console.log(url);
+            UrlExists(url, function(status){
+                console.log(status);
+                if(status === 200){
+                   window.open(url, '_blank');
+                } else {
+                   console.log('404');
+                   console.log(artist);
+                   artist = artist.replace(/-/gi, '_');
+                   console.log(artist);
+                   window.open('https://rateyourmusic.com/artist/' + artist,'_blank');
+                }
+            });
+            return false;
+        })
+    });
+
+
+    function UrlExists(url, cb){
+        jQuery.ajax({
+            url:      url,
+            timeout: 2000,
+            dataType: 'jsonp',
+            type:     'GET',
+            crossDomain: true,
+            complete:  function(xhr){
+                console.log(xhr);
+                if(typeof cb === 'function')
+                   cb.apply(this, [xhr.status]);
+            }
+        });
+    }
+
+ </script>
+
 {% endblock %}

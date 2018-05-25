@@ -13,8 +13,8 @@
         <div class="row">
             {% for album in data.albums %}
                 {% if (status.id == album.status) and (album.newArtist == isNewArtist) %}
-                    <div class="col-md-3" style="min-height: 330px;">
-                        <img src="{{ album._.image.fit(240,240) }}" class="img" style="min-height: 240px; background-contain: cover;">
+                    <div class="col-md-3 album-profile">
+                        <img src="{{ album._.image.fit(260,260) }}" class="img cover">
                             <p>
                         {% for artist in data.artists %}
                             {% if artist.id == album.artist %}

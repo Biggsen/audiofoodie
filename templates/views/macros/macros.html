@@ -1,0 +1,72 @@
+{% macro albumName(album) %}
+    <span class="lead">
+        <strong>{{ album.name }}</strong>
+        <small>({{album._.year.format('YYYY')}})</small>
+    </span>
+{% endmacro %}
+
+{% macro artistLink(artistSlug, artistName, albumNewArtist) %}
+    <a href="/artist/{{ artistSlug }}">
+        {{ artistName }}
+    </a>
+    {% if albumNewArtist %}
+        <span class="label label-success">New artist</span>
+    {% endif %}
+{% endmacro %}
+
+{% macro rymLink(artistSlug) %}
+    <a href="#" data-url="https://rateyourmusic.com/artist/{{ artistSlug }}" data-artist="{{ artistSlug }}" class="js-check404">rym</a>
+{% endmacro %}
+
+{% macro lyricsLink(artistSlug, albumKey) %}
+    <a href="https://genius.com/albums/{{ artistSlug }}/{{ albumKey }}" target="_blank">lyrics</a>
+{% endmacro %}
+
+{% macro statusDate(album, statusName) %}
+    {% if statusName == 'Curious' %}
+        <span> / {{ album._.curiousDate.format("MMMM DD YYYY") }}</span>
+    {% elseif statusName == 'Interested' %}
+        <span> / {{ album._.interestedDate.format("MMMM DD YYYY") }}</span>
+    {% elseif statusName == 'Great' %}
+        <span> / {{ album._.greatDate.format("MMMM DD YYYY") }}</span>
+    {% elseif statusName == 'Excellent' %}
+        <span> / {{ album._.excellentDate.format("MMMM DD YYYY") }}</span>
+    {% endif %}
+{% endmacro %}
+
+{% macro albumList(data,statusName) %}
+    {% for status in data.statuses %}
+        {% if status.name == statusName %}
+            <div class="row">
+                {% for album in data.albums %}
+                    {% if (status.id == album.status) %}
+                        <div class="col col-md-3">
+                            <div class="album-profile">
+                                <img src="{{ album._.image.fit(260,260) }}" class="img cover">
+                                <p>
+                                    {{ albumName(album) }}<br/>
+                                    {% for artist in data.artists %}
+                                        {% if artist.id == album.artist %}
+                                            {{ artistLink(artist.slug,artist.name,album.newArtist) }}
+                                            <br><br>
+                                            {{ rymLink(artist.slug) }} /
+                                            {{ lyricsLink(artist.slug,album.key) }}
+                                            {{ statusDate(album,statusName) }}
+
+                                        {% elseif (album.artist | length) > 1 %}
+                                            {% for item in album.artist %}
+                                                {% if item == artist.id %}
+                                                    <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

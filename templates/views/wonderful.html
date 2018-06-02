@@ -8,7 +8,9 @@
         On the menu
     </h3>
     <h4>Absolutely wonderful music. These are my favourites.</h4>
-    {{ macro.albumList(data,'Wonderful') }}
+    {% for i in range(1990, 2019) | reverse %}
+        {{ macro.albumListByYear(data,'Wonderful',i) }}
+    {% endfor %}
 </div>
 {% endblock %}
 

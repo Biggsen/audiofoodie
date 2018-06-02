@@ -34,6 +34,92 @@
     {% endif %}
 {% endmacro %}
 
+{% macro albumListByYear(data,statusName,movementYear) %}
+    {% for status in data.statuses %}
+        {% if status.name == statusName %}
+            {% set exists = false %}
+            {% for album in data.albums %}
+                {% if status.id == album.status and album._.movementDate.format('YYYY') == movementYear and exists == false %}
+                    {% set exists = true %}
+                {% endif %}
+            {% endfor %}
+
+            {% if exists %}
+                <h4 class="push--top">{{ movementYear }}</h4>
+                <div class="row">
+                    {% for album in data.albums %}
+                        {% if (status.id == album.status) and (album._.movementDate.format('YYYY') == movementYear) %}
+                            <div class="col col-md-3">
+                                <div class="album-profile">
+                                    <img src="{{ album._.image.fit(260,260) }}" class="img cover">
+                                    <p>
+                                        {{ albumName(album) }}<br/>
+                                        {% for artist in data.artists %}
+                                            {% if artist.id == album.artist %}
+                                                {{ artistLink(artist.slug,artist.name,album.newArtist) }}
+                                                <br><br>
+                                                {{ rymLink(artist.slug) }} /
+                                                {{ lyricsLink(artist.slug,album.key) }}
+                                                {{ statusDate(album,statusName) }}
+
+                                            {% elseif (album.artist | length) > 1 %}
+                                                {% for item in album.artist %}
+                                                    {% if item == artist.id %}
+                                                        <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro albumListNoMovement(data,statusName) %}
+    {% for status in data.statuses %}
+        {% if status.name == statusName %}
+            <h4 class="push--top">Listening year not set</h4>
+            <div class="row">
+                {% for album in data.albums %}
+                    {% if (status.id == album.status and not album.movementDate ) %}
+                        <div class="col col-md-3">
+                            <div class="album-profile">
+                                <p>{{ album.movementDate }}</p>
+                                <img src="{{ album._.image.fit(260,260) }}" class="img cover">
+                                <p>
+                                    {{ albumName(album) }}<br/>
+                                    {% for artist in data.artists %}
+                                        {% if artist.id == album.artist %}
+                                            {{ artistLink(artist.slug,artist.name,album.newArtist) }}
+                                            <br><br>
+                                            {{ rymLink(artist.slug) }} /
+                                            {{ lyricsLink(artist.slug,album.key) }}
+                                            {{ statusDate(album,statusName) }}
+
+                                        {% elseif (album.artist | length) > 1 %}
+                                            {% for item in album.artist %}
+                                                {% if item == artist.id %}
+                                                    <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
 {% macro albumList(data,statusName) %}
     {% for status in data.statuses %}
         {% if status.name == statusName %}

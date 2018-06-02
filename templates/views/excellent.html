@@ -8,10 +8,15 @@
         On my plate
     </h3>
     <h4>Excellent music. Seems to keep giving.</h4>
-    {{ macro.albumList(data,'Excellent') }}
+    {% for i in range(1990, 2019) | reverse %}
+        {{ macro.albumListByYear(data,'Excellent',i) }}
+    {% endfor %}
+
     <h3>On the menu</h3>
     <h4>Wonderful stuff, but not gold.</h4>
-    {{ macro.albumList(data,'Not Quite Wonderful --]') }}
+    {% for i in range(1990, 2019) | reverse %}
+        {{ macro.albumListByYear(data,'Not Quite Wonderful --]',i) }}
+    {% endfor %}
 </div>
 {% endblock %}
 

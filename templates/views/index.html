@@ -23,6 +23,11 @@
 	                    {% for status in data.statuses %}
 	                    	{% if status.id == album.status %}
 	                    		<strong>{{ status.name}}</strong>
+	                    		{% if status.name == 'Wonderful' %}
+	                    			({{ album._.wonderfulDate.format("MMMM DD YYYY") }})
+	                    		{% elseif status.name == 'Not Quite Wonderful --]' %}
+	                    			({{ album._.notQuiteWonderfulDate.format("MMMM DD YYYY") }})
+	                    		{% endif %}
 	                    	{% endif %}
                     	{% endfor %}
 	                </p>

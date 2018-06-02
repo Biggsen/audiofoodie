@@ -9,6 +9,7 @@ var Types = keystone.Field.Types;
 var Artist = new keystone.List('Artist', {
 	map: { name: 'name' },
 	autokey: { path: 'slug', from: 'name', unique: true },
+    track: { createdAt: true, updatedAt: true }
 });
 
 Artist.add({

@@ -19,6 +19,7 @@ ArtistAlbum.add({
     status: { type: Types.Relationship, ref: 'Status', many: true },
     artist: { type: Types.Relationship, ref: 'Artist', many: true },
     newArtist: { type: Types.Boolean, label: 'Is this a new artist?' },
+    user: { type: Types.Relationship, ref: 'User', many: true},
     curiousDate: { type: Types.Date, default: '' },
     notInterestedDate: { type: Types.Date, default: '' },
     interestedDate: { type: Types.Date, default: '' },

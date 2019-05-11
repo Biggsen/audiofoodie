@@ -43,7 +43,9 @@ exports = module.exports = function (req, res) {
     // Load all albums
     view.on('init', function (next) {
 
-        keystone.list('ArtistAlbum').model.find()
+        keystone.list('ArtistAlbum').model
+            .find()
+            .where('user', req.user)
             .sort('-wonderfulDate')
             .exec(function (err, results) {
 

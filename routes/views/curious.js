@@ -15,7 +15,9 @@ exports = module.exports = function (req, res) {
     // Load all statuses
     view.on('init', function (next) {
 
-        keystone.list('Status').model.find().exec(function (err, results) {
+        keystone.list('Status').model
+            .find()
+            .exec(function (err, results) {
 
             if (err || !results.length) {
                 return next(err);
@@ -29,7 +31,9 @@ exports = module.exports = function (req, res) {
     // Load all artists
     view.on('init', function (next) {
 
-        keystone.list('Artist').model.find().exec(function (err, results) {
+        keystone.list('Artist').model
+            .find()
+            .exec(function (err, results) {
 
             if (err || !results.length) {
                 return next(err);
@@ -43,7 +47,10 @@ exports = module.exports = function (req, res) {
     // Load all albums
     view.on('init', function (next) {
 
-        keystone.list('ArtistAlbum').model.find().exec(function (err, results) {
+        keystone.list('ArtistAlbum').model
+            .find()
+            .where('user', req.user)
+            .exec(function (err, results) {
 
             if (err || !results.length) {
                 return next(err);

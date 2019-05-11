@@ -15,6 +15,7 @@ var Artist = new keystone.List('Artist', {
 Artist.add({
 	name: { type: String, required: true },
 	album: { type: Types.Relationship, ref: 'ArtistAlbum', hidden: true },
+    user: { type: Types.Relationship, ref: 'User', many: true}
 });
 
 Artist.schema.virtual('content.full').get(function () {
@@ -23,5 +24,5 @@ Artist.schema.virtual('content.full').get(function () {
 
 Artist.relationship({ ref: 'ArtistAlbum', path: 'artist-albums', refPath: 'artist' });
 
-Artist.defaultColumns = 'name';
+Artist.defaultColumns = 'name,album,user';
 Artist.register();

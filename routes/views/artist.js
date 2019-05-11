@@ -65,7 +65,10 @@ exports = module.exports = function (req, res) {
 	// Load other artists
 	view.on('init', function (next) {
 
-		var q = keystone.list('Artist').model.find().sort('name');
+		var q = keystone.list('Artist').model
+            .find()
+            .where('user', req.user)
+            .sort('name');
 
 		q.exec(function (err, results) {
 			locals.data.artists = results;

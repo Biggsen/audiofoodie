@@ -14,22 +14,22 @@ var ArtistAlbum = new keystone.List('ArtistAlbum', {
 
 ArtistAlbum.add({
 	name: { type: String, required: true },
-    year: { type: Types.Date, format: 'YYYY' },
+    year: { type: Types.Date, format: 'YYYY', default: ''},
     image: { type: Types.CloudinaryImage },
     status: { type: Types.Relationship, ref: 'Status', many: true },
     artist: { type: Types.Relationship, ref: 'Artist', many: true },
     newArtist: { type: Types.Boolean, label: 'Is this a new artist?' },
-    curiousDate: { type: Types.Date },
-    notInterestedDate: { type: Types.Date },
-    interestedDate: { type: Types.Date },
-    decentStuffDate: { type: Types.Date },
-    greatDate: { type: Types.Date },
-    greatNotGrippingDate: { type: Types.Date },
-    excellentDate: { type: Types.Date },
-    notQuiteWonderfulDate: { type: Types.Date },
-    wonderfulDate: { type: Types.Date },
+    curiousDate: { type: Types.Date, default: '' },
+    notInterestedDate: { type: Types.Date, default: '' },
+    interestedDate: { type: Types.Date, default: '' },
+    decentStuffDate: { type: Types.Date, default: '' },
+    greatDate: { type: Types.Date, default: '' },
+    greatNotGrippingDate: { type: Types.Date, default: '' },
+    excellentDate: { type: Types.Date, default: '' },
+    notQuiteWonderfulDate: { type: Types.Date, default: '' },
+    wonderfulDate: { type: Types.Date, default: '' },
     movement: { type: Types.Boolean, label: 'Flag movement' },
-    movementDate: { type: Types.Date }
+    movementDate: { type: Types.Date, default: '' }
 });
 
 ArtistAlbum.relationship({ ref: 'Artist', path: 'artists', refPath: 'album' });

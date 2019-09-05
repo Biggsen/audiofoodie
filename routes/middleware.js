@@ -25,12 +25,12 @@ exports.initLocals = function (req, res, next) {
 		//{ label: 'Contact', key: 'contact', href: '/contact' },
 		// { label: 'Plates', key: 'audioplate', href: '/audioplate' },
 		// { label: 'Consumed', key: 'consumed', href: '/consumed' },
-		{ label: 'Curious', key: 'curious', href: '/curious' },
-		{ label: 'Interested', key: 'interested', href: '/interested' },
-		{ label: 'Great', key: 'great', href: '/great' },
-		{ label: 'Excellent', key: 'excellent', href: '/excellent' },
-		{ label: 'Wonderful', key: 'wonderful', href: '/wonderful' },
-		{ label: 'Artists', key: 'artist', href: '/artist' },
+		{ label: 'Curious', key: 'curious', href: '/status/1' },
+		{ label: 'Interested', key: 'interested', href: '/status/2' },
+		{ label: 'Great', key: 'great', href: '/status/3' },
+		{ label: 'Excellent', key: 'excellent', href: '/status/4' },
+		{ label: 'Wonderful', key: 'wonderful', href: '/status/5' },
+		{ label: 'Artists', key: 'artist', href: '/artist' }
 	];
 	res.locals.user = req.user;
 	next();

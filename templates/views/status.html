@@ -11,7 +11,7 @@
 			</h3>
 			<h4>{{ status.description }}</h4>
 			{% for i in range(1990, 2020) | reverse %}
-			{{ macro.albumListByYear(data,status.name,i) }}
+			{{ macro.albumListByYear(data,status.name,status.order,status.type,i) }}
 			{% endfor %}
 		{% endif %}
 		{% if status.type == 'storage' %}
@@ -21,7 +21,7 @@
 			</h3>
 			<h4>{{ status.description }}</h4>
 			{% for i in range(1990, 2020) | reverse %}
-			{{ macro.albumListByYear(data,status.name,i) }}
+			{{ macro.albumListByYear(data,status.name,status.order,status.type,i) }}
 			{% endfor %}
 		{% endif %}
 	{% endfor %}

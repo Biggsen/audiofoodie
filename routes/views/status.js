@@ -7,7 +7,6 @@ exports = module.exports = function (req, res) {
     var locals = res.locals;
 
     // Set locals
-    locals.section = 'curious';
     locals.filters = {
         statusId: req.params.id
     };
@@ -24,8 +23,11 @@ exports = module.exports = function (req, res) {
                 console.log(result);
                 locals.data.status = result;
                 locals.section = locals.data.status[0].key;
-                //next();
+                next();
             });
+    });
+
+    view.on('init', function (next) {
 
         Status.model
             .find()

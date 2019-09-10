@@ -5,7 +5,13 @@
 		<div class="jumbotron">
 			{% for album in data.albums %}
 				{% if album.movement %}
-					<p>{{ album.name }} by
+					<p>
+					{% for status in data.statuses %}
+                    	{% if status.id == album.status %}
+                    		{{ album._[status.type + status.order + 'Date'].format("MMMM DD YYYY") }} -
+                    	{% endif %}
+                	{% endfor %}
+						{{ album.name }} by
 						{% for artist in data.artists %}
 	                        {% if artist.id == album.artist %}
 	                            <!-- <a href="https://rateyourmusic.com/artist/{{ artist.slug }}" target="_blank"><strong>{{ artist.name }}</strong></a><br> -->
@@ -23,11 +29,6 @@
 	                    {% for status in data.statuses %}
 	                    	{% if status.id == album.status %}
 	                    		<strong>{{ status.name}}</strong>
-	                    		{% if status.name == 'Wonderful' %}
-	                    			({{ album._.wonderfulDate.format("MMMM DD YYYY") }})
-	                    		{% elseif status.name == 'Not Quite Wonderful --]' %}
-	                    			({{ album._.notQuiteWonderfulDate.format("MMMM DD YYYY") }})
-	                    		{% endif %}
 	                    	{% endif %}
                     	{% endfor %}
 	                </p>

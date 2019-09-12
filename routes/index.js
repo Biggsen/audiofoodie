@@ -64,6 +64,8 @@ exports = module.exports = function (app) {
 	app.all('/consumed', routes.views.consumed);
 	app.all('/artist/:artist?', routes.views.artist);
 	app.all('/status/:id?', routes.views.status);
+	app.all('/album/:action?/:key?', routes.views.album);
+
 	// API
 	app.get('/api/album', routes.api.album.list);
 	app.get('/api/album/:id', routes.api.album.get);

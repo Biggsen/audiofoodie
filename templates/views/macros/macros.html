@@ -45,7 +45,7 @@
                                 <div class="album-profile">
                                     <img src="{{ album._.image.fit(260,260) }}" class="img cover">
                                     <p>
-                                        {{ albumName(album) }}<br/>
+                                        <a href="/album/view/{{ album.key }}">{{ albumName(album) }}</a><br/>
                                         {% for artist in data.artists %}
                                             {% if artist.id == album.artist %}
                                                 {{ artistLink(artist.slug,artist.name,album.newArtist) }}

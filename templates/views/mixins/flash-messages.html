@@ -19,7 +19,7 @@
 
 {% macro flashMessage(message, type) %}
 	<div class="alert alert-{{ type }}">
-		{% if message %}
+		{% if message.title or message.detail or message.list %}
 			{% if message.title %}
 				<h5>{{ message.title }}</h5>
 			{% endif %}

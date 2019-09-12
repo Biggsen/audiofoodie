@@ -21,10 +21,27 @@
 var keystone = require('keystone');
 var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
+
+// Auth0
+var authCheck = jwt({
+  	secret: jwks.expressJwtSecret({
+		cache: true,
+		rateLimit: true,
+		jwksRequestsPerMinute: 5,
+		// YOUR-AUTH0-DOMAIN name e.g https://prosper.auth0.com
+		jwksUri: "https://audiofoodie.eu.auth0.com/.well-known/jwks.json"
+    }),
+    // This is the identifier we set when we created the API
+    audience: 'https://audiofoodie.herokuapp.com',
+    issuer: 'https://audiofoodie.eu.auth0.com/',
+    algorithms: ['RS256']
+});
 
 // Import Route Controllers
 var routes = {

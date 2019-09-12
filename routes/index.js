@@ -29,6 +29,7 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 var routes = {
 	views: importRoutes('./views'),
+	api: importRoutes('./api'),
 };
 
 // Setup Route Bindings
@@ -46,6 +47,12 @@ exports = module.exports = function (app) {
 	app.all('/consumed', routes.views.consumed);
 	app.all('/artist/:artist?', routes.views.artist);
 	app.all('/status/:id?', routes.views.status);
+	// API
+	app.get('/api/album', routes.api.album.list);
+	app.get('/api/album/:id', routes.api.album.get);
+	app.post('/api/album', authCheck, routes.api.album.create);
+	app.put('/api/album/:id', authCheck, routes.api.album.update);
+	app.delete('/api/album/:id', authCheck, routes.api.album.remove);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

@@ -23,6 +23,7 @@ exports = module.exports = function (req, res) {
 
     var lKey = locals.filters.albumKey;
     var lAction = locals.filters.action;
+    var album;
 
     // Load album
     view.on('init', function (next) {
@@ -33,6 +34,7 @@ exports = module.exports = function (req, res) {
 
             if (err || !result.length) { return next(err); }
             locals.data.album = result;
+            album = locals.data.album[0];
             next();
         });
     });
@@ -51,9 +53,38 @@ exports = module.exports = function (req, res) {
     // -----------------------------------------
 
     if (lAction == 'view') {
+        locals.action.view = true;
         view.on('init', function (next) {
-            locals.action.view = true;
             next();
+        });
+
+        view.on('post', function (next) {
+            var pAction = req.body.action;
+            if (pAction == 'demote') {
+                var newStatusDate = 'storage' + album.status[0].order + 'Date';
+            };
+            if (pAction == 'promote') {
+                var newStatusDate = 'filter' + (album.status[0].order + 1) + 'Date';
+            };
+            req.body[newStatusDate] = Date.now();
+            req.body.movementDate = Date.now();
+            req.body.movement = 'on';
+            console.log(req.body);
+            //next();
+            request
+                .put('localhost:3000/api/album/' + album.id)
+                .set('Authorization', authType + ' ' + authToken)
+                .send(req.body)
+                .end(function(err, res) {
+                    if (err) {
+                        console.log('Error with the AJAX request: ', err)
+                        req.flash('error', 'Something went wrong.');
+                        return;
+                    }
+                    console.log('Update album');
+                    req.flash('success', 'Album successfully updated');
+                    next();
+                });
         });
     }
 

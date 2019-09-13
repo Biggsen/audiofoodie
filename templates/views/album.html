@@ -13,13 +13,18 @@
             <h3>{{ album.status[0].name }}</h3>
             {% for status in data.statuses %}
                 {% if status.type == 'storage' and status.order == album.status[0].order %}
-                    <form action="/api/album" method="get">
-                        <button>RUN</button>
+                    <form action="" method="post" class="push--bottom">
+                        <input type="hidden" name="action" value="demote">
+                        <input type="hidden" name="status" value="{{ status.id }}">
+                        <button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {{ status.name }}</button>
                     </form>
-                    <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {{ status.name }}</button>
                 {% endif %}
                 {% if status.type == 'filter' and status.order == (album.status[0].order + 1) %}
-                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Promote album to {{ status.name | lower }}</button>
+                    <form action="" method="post">
+                        <input type="hidden" name="action" value="promote">
+                        <input type="hidden" name="status" value="{{ status.id }}">
+                        <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Promote album to {{ status.name | lower }}</button>
+                    </form>
                 {% endif %}
             {% endfor %}
         {% elseif action.add %}

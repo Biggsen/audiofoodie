@@ -26,6 +26,26 @@
     <a href="https://last.fm/music/{{ artistSlug | replace("-", "+") }}" target="_blank">last.fm</a>
 {% endmacro %}
 
+{% macro voteButtons(status,album) %}
+    <div class="vote">
+        <form action="" method="post" class="vote-demote">
+            <input type="hidden" name="action" value="demote">
+            <input type="hidden" name="status" value="{{ status.id }}">
+            <input type="hidden" name="albumId" value="{{ album.id }}">
+            <input type="hidden" name="statusOrder" value="{{ album.status[0].order }}">
+            <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+        </form>
+
+        <form action="" method="post" class="vote-promote">
+            <input type="hidden" name="action" value="promote">
+            <input type="hidden" name="status" value="{{ status.id }}">
+            <input type="hidden" name="albumId" value="{{ album.id }}">
+            <input type="hidden" name="statusOrder" value="{{ album.status[0].order }}">
+            <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok"></span></button>
+        </form>
+    </div>
+{% endmacro %}
+
 {% macro albumListByYear(data,statusName,statusOrder,statusType,movementYear) %}
     {% for status in data.statuses %}
         {% if status.name == statusName %}
@@ -43,6 +63,12 @@
                         {% if (status.id == album.status[0].id) and (album._.movementDate.format('YYYY') == movementYear) %}
                             <div class="col col-md-3">
                                 <div class="album-profile">
+                                    {% if not (status.type == 'storage' or status.name == 'Wonderful') %}
+                                        {{ voteButtons(status,album) }}
+                                    {% endif %}
+
+
+
                                     <img src="{{ album._.image.fit(260,260) }}" class="img cover">
                                     <p>
                                         <a href="/album/view/{{ album.key }}">{{ albumName(album) }}</a><br/>

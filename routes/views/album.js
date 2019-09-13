@@ -5,6 +5,9 @@ var request = require('superagent');
 
 exports = module.exports = function (req, res) {
 
+    var authType = req.cookies['audiofoodie.ttype'];
+    var authToken = req.cookies['audiofoodie.token'];
+
 	var view = new keystone.View(req, res);
 	var locals = res.locals;
 
@@ -70,10 +73,17 @@ exports = module.exports = function (req, res) {
     // -----------------------------------------
 
     if (lAction == 'update') {
-        view.on('init', function (next) {
+        locals.action.update = true;
+
+        view.on('init', function(next){
+            next();
+        });
+
+        view.on('post', function (next) {
             console.log(req.body);
             request
                 .put('localhost:3000/api/album/' + req.body.id)
+                .set('Authorization', authType + ' ' + authToken)
                 .send(req.body)
                 .end(function(err, res) {
                     if (err) {
@@ -85,8 +95,6 @@ exports = module.exports = function (req, res) {
                     req.flash('success', 'Album successfully updated');
                     next();
                 });
-            locals.action.update = true;
-            next();
         });
     }
 

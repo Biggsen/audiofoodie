@@ -1,5 +1,7 @@
 var keystone = require('keystone'),
     Status = keystone.list('Status'),
+    Artist = keystone.list('Artist'),
+    Album = keystone.list('ArtistAlbum'),
 
 exports = module.exports = function (req, res) {
 
@@ -23,12 +25,13 @@ exports = module.exports = function (req, res) {
         Status.model
             .find({ order: locals.filters.statusId}) 
             .sort('type')
-            .exec(function(err, result){
-                console.log(result);
-                locals.data.status = result;
-                locals.section = locals.data.status[0].key;
-                next();
-            });
+            .exec(function(err, results){
+
+            if (err || !results.length) { return next(err) ;}
+            locals.data.status = results;
+            locals.section = locals.data.status[0].key;
+            next();
+        });
     });
 
     view.on('init', function (next) {
@@ -37,10 +40,7 @@ exports = module.exports = function (req, res) {
             .find()
             .exec(function (err, results) {
 
-            if (err || !results.length) {
-                return next(err);
-            }
-
+            if (err || !results.length) { return next(err); }
             locals.data.statuses = results;
             next();
         });
@@ -49,14 +49,11 @@ exports = module.exports = function (req, res) {
     // Load all artists
     view.on('init', function (next) {
 
-        keystone.list('Artist').model
+        Artist.model
             .find()
             .exec(function (err, results) {
 
-            if (err || !results.length) {
-                return next(err);
-            }
-
+            if (err || !results.length) { return next(err); }
             locals.data.artists = results;
             next();
         });
@@ -65,15 +62,13 @@ exports = module.exports = function (req, res) {
     // Load all albums
     view.on('init', function (next) {
 
-        keystone.list('ArtistAlbum').model
+        Album.model
             .find()
             .where('user', req.user)
+            .populate('status')
             .exec(function (err, results) {
 
-            if (err || !results.length) {
-                return next(err);
-            }
-
+            if (err || !results.length) { return next(err); }
             locals.data.albums = results;
             next();
         });

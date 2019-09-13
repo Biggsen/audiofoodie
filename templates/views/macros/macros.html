@@ -31,7 +31,7 @@
         {% if status.name == statusName %}
             {% set exists = false %}
             {% for album in data.albums %}
-                {% if status.id == album.status and album._.movementDate.format('YYYY') == movementYear and exists == false %}
+                {% if status.id == album.status[0].id and album._.movementDate.format('YYYY') == movementYear and exists == false %}
                     {% set exists = true %}
                 {% endif %}
             {% endfor %}
@@ -40,7 +40,7 @@
                 <h4 class="push--top">{{ movementYear }}</h4>
                 <div class="row">
                     {% for album in data.albums %}
-                        {% if (status.id == album.status) and (album._.movementDate.format('YYYY') == movementYear) %}
+                        {% if (status.id == album.status[0].id) and (album._.movementDate.format('YYYY') == movementYear) %}
                             <div class="col col-md-3">
                                 <div class="album-profile">
                                     <img src="{{ album._.image.fit(260,260) }}" class="img cover">

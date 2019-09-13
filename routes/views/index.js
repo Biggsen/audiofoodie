@@ -12,7 +12,7 @@ exports = module.exports = function (req, res) {
         statuses: [],
     };
 
-        // Load all statuses
+    // Load all statuses
     view.on('init', function (next) {
 
         keystone.list('Status').model.find().exec(function (err, results) {

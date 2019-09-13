@@ -114,7 +114,7 @@ exports = module.exports = function (req, res) {
         console.log(req.body);
         //next();
         request
-            .put('localhost:3000/api/album/' + req.body.albumId)
+            .put(process.env.DOMAIN + '/api/album/' + req.body.albumId)
             .set('Authorization', authType + ' ' + authToken)
             .send(req.body)
             .end(function(err, response) {

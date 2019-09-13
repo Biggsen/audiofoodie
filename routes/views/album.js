@@ -72,7 +72,7 @@ exports = module.exports = function (req, res) {
             console.log(req.body);
             //next();
             request
-                .put('localhost:3000/api/album/' + album.id)
+                .put(process.env.DOMAIN + '/api/album/' + album.id)
                 .set('Authorization', authType + ' ' + authToken)
                 .send(req.body)
                 .end(function(err, res) {
@@ -113,7 +113,7 @@ exports = module.exports = function (req, res) {
         view.on('post', function (next) {
             console.log(req.body);
             request
-                .put('localhost:3000/api/album/' + req.body.id)
+                .put(process.env.DOMAIN + '/api/album/' + req.body.id)
                 .set('Authorization', authType + ' ' + authToken)
                 .send(req.body)
                 .end(function(err, res) {

@@ -14,6 +14,10 @@ exports = module.exports = function (req, res) {
         statuses: [],
     };
 
+    if (!req.session.userId) {
+        return res.redirect('/signin');
+    }
+
     view.on('init', function (next) {
 
         Status.model

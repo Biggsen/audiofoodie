@@ -47,6 +47,7 @@ var authCheck = jwt({
 var routes = {
 	views: importRoutes('./views'),
 	api: importRoutes('./api'),
+    auth: importRoutes('./auth'),
 };
 
 // Setup Route Bindings
@@ -65,6 +66,7 @@ exports = module.exports = function (app) {
 	app.all('/artist/:artist?', routes.views.artist);
 	app.all('/status/:id?', routes.views.status);
 	app.all('/album/:action?/:key?', routes.views.album);
+    app.all('/auth', routes.auth.auth);
 
 	// API
 	app.get('/api/album', routes.api.album.list);

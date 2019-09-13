@@ -6008,3 +6008,18 @@ button.close {
 
 .lead {
   font-size: 18px; }
+
+.vote-demote,
+.vote-promote {
+  position: absolute;
+  top: 4px;
+  opacity: 0.2; }
+  .vote-demote:hover,
+  .vote-promote:hover {
+    opacity: 1; }
+
+.vote-demote {
+  left: 12px; }
+
+.vote-promote {
+  right: 12px; }

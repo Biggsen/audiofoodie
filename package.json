@@ -12,7 +12,7 @@
     "express-jwt": "^5.3.1",
     "jwks-rsa": "^1.6.0",
     "keystone": "4.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "nan": "git+https://github.com/nodejs/nan.git",
     "node-sass": "4.10.0",
     "node-sass-middleware": "0.11.0",

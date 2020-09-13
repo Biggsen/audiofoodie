@@ -22,8 +22,8 @@
     <a href="https://genius.com/albums/{{ artistSlug }}/{{ albumKey }}" target="_blank">lyrics</a>
 {% endmacro %}
 
-{% macro lastFMLink(artistSlug) %}
-    <a href="https://last.fm/music/{{ artistSlug | replace("-", "+") }}" target="_blank">last.fm</a>
+{% macro lastFMLink(artistSlug,albumName,lastFmUsername) %}
+    <a href="https://last.fm/user/{{ lastFmUsername }}/library/music/{{ artistSlug | replace("-", "+") }}/{{ albumName | replace(" ", "+") }}" target="_blank">last.fm</a>
 {% endmacro %}
 
 {% macro voteButtons(status,album) %}
@@ -46,7 +46,7 @@
     </div>
 {% endmacro %}
 
-{% macro albumListByYear(data,statusName,statusOrder,statusType,movementYear) %}
+{% macro albumListByYear(data,user,statusName,statusOrder,statusType,movementYear) %}
     {% for status in data.statuses %}
         {% if status.name == statusName %}
             {% set exists = false %}
@@ -78,7 +78,7 @@
                                                 <br><br>
                                                 {{ rymLink(artist.slug) }} /
                                                 {{ lyricsLink(artist.slug,album.key) }} /
-                                                {{ lastFMLink(artist.slug) }}
+                                                {{ lastFMLink(artist.slug,album.name,user.lastFmUsername) }}
                                                 <span> / {{ album._[statusType + statusOrder + 'Date'].format("MMMM DD YYYY") }}</span>
 
                                             {% elseif (album.artist | length) > 1 %}

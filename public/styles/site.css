@@ -5982,6 +5982,9 @@ button.close {
   padding-right: 10px !important;
   padding-left: 10px !important; }
 
+.pos-rel {
+  position: relative; }
+
 #header {
   margin-top: 30px; }
 
@@ -5996,18 +5999,19 @@ button.close {
   max-width: 100%;
   height: auto; }
 
-.album-profile {
-  min-height: 390px; }
-  .album-profile .cover {
-    width: 100%;
-    height: 275px;
-    object-fit: cover; }
-
-.col {
-  padding: 0 8px; }
+.album-profile .cover {
+  width: 100%;
+  height: 300px;
+  object-fit: cover; }
 
 .lead {
   font-size: 18px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  column-gap: 10px;
+  row-gap: 1em; }
 
 .vote-demote,
 .vote-promote {

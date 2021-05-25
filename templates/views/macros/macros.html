@@ -62,10 +62,10 @@
 
             {% if exists %}
                 <h4 class="push--top">{{ movementYear }}</h4>
-                <div class="row">
+                <div class="grid">
                     {% for album in data.albums %}
                         {% if (status.id == album.status[0].id) and (album._.movementDate.format('YYYY') == movementYear) %}
-                            <div class="col col-md-3">
+                            <div class="pos-rel">
                                 <div class="album-profile">
                                     {% if not (status.type == 'storage' or status.name == 'Wonderful') %}
                                         {{ voteButtons(status,album) }}

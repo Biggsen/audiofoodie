@@ -30,7 +30,8 @@ ArtistAlbum.add({
     storage4Date: { type: Types.Date, default: '' },
     filter5Date: { type: Types.Date, default: '' },
     movement: { type: Types.Boolean, label: 'Flag movement' },
-    movementDate: { type: Types.Date, default: '' }
+    movementDate: { type: Types.Date, default: '' },
+    rymUrl: { type: String, default: '' }
 });
 
 ArtistAlbum.relationship({ ref: 'Artist', path: 'artists', refPath: 'album' });

@@ -38,6 +38,7 @@
 			console.log('clicked');
 			var url = $(this).data('url');
 			var artist = $(this).data('artist');
+			var album = $(this).data('album');
 			console.log(url);
 			UrlExists(url, function (status) {
 				console.log(status);
@@ -46,9 +47,22 @@
 				} else {
 					console.log('404');
 					console.log(artist);
+					console.log(album);
 					artist = artist.replace(/-/gi, '_');
+					album = album.replace(/-/gi, '_');
 					console.log(artist);
-					window.open('https://rateyourmusic.com/artist/' + artist, '_blank');
+					console.log(album);
+					newUrl = 'https://rateyourmusic.com/release/album/' + artist + '/' + album
+
+					UrlExists(newUrl, function (status) {
+						console.log(status);
+						if (status === 200) {
+							window.open(newUrl, '_blank');
+						} else {
+							console.log('404');
+							alert('Album not found\n' + newUrl)
+						}
+					});
 				}
 			});
 			return false;

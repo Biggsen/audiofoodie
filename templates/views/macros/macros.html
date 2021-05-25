@@ -14,8 +14,12 @@
     {% endif %}
 {% endmacro %}
 
-{% macro rymLink(artistSlug) %}
-    <a href="#" data-url="https://rateyourmusic.com/artist/{{ artistSlug }}" data-artist="{{ artistSlug }}" class="js-check404">rym</a>
+{% macro rymLink(artistSlug,albumName,rymUrl) %}
+    {% if rymUrl %}
+        <a href="{{ rymUrl }}" target="_blank">rym</a>
+    {% else %}
+        <a href="#" data-url="https://rateyourmusic.com/release/album/{{ artistSlug }}/{{ albumName | lower | replace(" ", "-") }}" data-artist="{{ artistSlug }}" data-album="{{ albumName | lower | replace(" ", "-") }}" class="js-check404">rym</a>
+    {% endif %}
 {% endmacro %}
 
 {% macro lyricsLink(artistSlug, albumKey) %}
@@ -76,7 +80,7 @@
                                             {% if artist.id == album.artist %}
                                                 {{ artistLink(artist.slug,artist.name,album.newArtist) }}
                                                 <br><br>
-                                                {{ rymLink(artist.slug) }} /
+                                                {{ rymLink(artist.slug,album.name,album.rymUrl) }} /
                                                 {{ lyricsLink(artist.slug,album.key) }} /
                                                 {{ lastFMLink(artist.slug,album.name,user.lastFmUsername) }}
                                                 <span> / {{ album._[statusType + statusOrder + 'Date'].format("MMMM DD YYYY") }}</span>

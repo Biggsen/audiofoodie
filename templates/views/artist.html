@@ -7,10 +7,10 @@
 			<h3>{{ data.artist.name }}</h3>
 			<a href="#" data-url="https://rateyourmusic.com/artist/{{ data.artist.slug }}" data-artist="{{ data.artist.slug }}" class="js-check404"><strong>Rate Your Music profile</strong></a>
 			<h4>Albums</h4>
-			<div class="row">
+			<div class="grid">
 				{% for album in data.albums %}
-					<div class="col-md-3">
-						<img src="{{ album._.image.fit(250,250) }}" class="img">
+					<div class="album-profile">
+						<img src="{{ album._.image.fit(250,250) }}" class="img cover">
 						<p>{{ album._.year.format("YYYY") }} - {{ album.name }}</p>
 						{% for status in data.statuses %}
 							{% if album.status == status.id %}

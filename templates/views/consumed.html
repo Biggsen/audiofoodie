@@ -3,16 +3,17 @@
 {% macro albumList(newArtist,statusName) %}
 {% for status in data.statuses %}
     {% if status.name == statusName %}
+        <h2>Consumed</h2>
         <h3>{{ newArtist }} - {{ status.name }}</h3>
         {% if newArtist == 'New' %}
             {% set isNewArtist = true %}
         {% else %}
             {% set isNewArtist = false %}
         {% endif %}
-        <div class="row">
+        <div class="grid">
             {% for album in data.albums %}
                 {% if (status.id == album.status) and (album.newArtist == isNewArtist) %}
-                    <div class="col-md-3 album-profile">
+                    <div class="album-profile">
                         <img src="{{ album._.image.fit(260,260) }}" class="img cover">
                             <p>
                         {% for artist in data.artists %}

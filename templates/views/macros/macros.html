@@ -83,7 +83,7 @@
                                                 {{ rymLink(artist.slug,album.name,album.rymUrl) }} /
                                                 {{ lyricsLink(artist.slug,album.key) }} /
                                                 {{ lastFMLink(artist.slug,album.name,user.lastFmUsername) }}
-                                                <span> / {{ album._[statusType + statusOrder + 'Date'].format("MMMM DD YYYY") }}</span>
+                                                <br/><span>When: {{ album._[statusType + statusOrder + 'Date'].format("MMMM DD YYYY") }}</span>
 
                                             {% elseif (album.artist | length) > 1 %}
                                                 {% for item in album.artist %}

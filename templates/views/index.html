@@ -2,37 +2,69 @@
 
 {% block content %}
 	<div class="container">
-		<div class="jumbotron">
+		<h2 class="h3">What's happening?</h2>
+		<div class="home-grid">
 			{% for album in data.albums %}
+				{% for status in data.statuses %}
+                    {% if status.id == album.status %}
+	                    {% if status.type === 'filter' %}
+							<div class="panel-flex panel panel-success flush--bottom">
+		                {% else %}
+		                    <div class="panel-flex panel panel-danger flush--bottom">
+		                {% endif %}
+                    {% endif %}
+                {% endfor %}
 				{% if album.movement %}
-					<p>
 					{% for status in data.statuses %}
-                    	{% if status.id == album.status %}
-                    		{{ album._[status.type + status.order + 'Date'].format("MMMM DD YYYY") }} -
-                    	{% endif %}
-                	{% endfor %}
-						{{ album.name }} by
-						{% for artist in data.artists %}
+	                    {% if status.id == album.status %}
+	                    <div class="panel-heading">
+	                    	<h3 class="panel-title">{{ status.name }}
+			                    {% if status.type === 'filter' %}
+				                    <span>&rarr;</span>
+				                {% else %}
+				                    <span>&#8867;</span>
+				                {% endif %}
+				            </h3>
+	                    </div>
+	                    {% endif %}
+                    {% endfor %}
+					<div class="album-profile">
+						<img src="{{ album._.image.fit(200,200) }}" class="img-responsive cover">
+					</div>
+					<div class="panel-body">
+						<p class="flush--bottom">
+							<span class="lead">
+						        <strong>{{ album.name }}</strong>
+						        <small>({{album._.year.format('YYYY')}})</small>
+						    </span>
+						</p>
+		                {% for artist in data.artists %}
 	                        {% if artist.id == album.artist %}
+			                <p class="flush--bottom">
 	                            <!-- <a href="https://rateyourmusic.com/artist/{{ artist.slug }}" target="_blank"><strong>{{ artist.name }}</strong></a><br> -->
-	                            <a href="/artist/{{ artist.slug }}">{{ artist.name }}</a>
+	                            {{ artist.name }}
+	                        </p>
 	                        {% elseif (album.artist | length) > 1 %}
+	                        	<p class="flush--bottom">
 	                            {% for item in album.artist %}
 	                                {% if item == artist.id %}
 	                                    <!-- <a href="https://rateyourmusic.com/artist/{{ artist.slug }}" target="_blank"><strong>{{ artist.name }}</strong></a><br> -->
 	                                    <a href="/artist/{{ artist.slug }}">{{ artist.name }}</a>
 	                                {% endif %}
+		                        </p>
 	                            {% endfor %}
 	                        {% endif %}
+		                {% endfor %}
+						</div>
+						<div class="panel-footer">
+		                {% for status in data.statuses %}
+		                    {% if status.id == album.status %}
+								<small><strong>Biggs</strong> - {{ album._[status.type + status.order + 'Date'].format("MMMM DD YYYY") }}</small>
+		                    {% endif %}
 	                    {% endfor %}
-	                    was moved to
-	                    {% for status in data.statuses %}
-	                    	{% if status.id == album.status %}
-	                    		<strong>{{ status.name}}</strong>
-	                    	{% endif %}
-                    	{% endfor %}
-	                </p>
+					</div>
 				{% endif %}
+				</div>
 			{% endfor %}
 		</div>
 	</div>

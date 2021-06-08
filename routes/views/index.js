@@ -12,49 +12,9 @@ exports = module.exports = function (req, res) {
         statuses: [],
     };
 
-    // Load all statuses
-    view.on('init', function (next) {
-
-        keystone.list('Status').model.find().exec(function (err, results) {
-
-            if (err || !results.length) {
-                return next(err);
-            }
-
-            locals.data.statuses = results;
-            next();
-        });
-    });
-
-    // Load all artists
-    view.on('init', function (next) {
-
-        keystone.list('Artist').model.find().exec(function (err, results) {
-
-            if (err || !results.length) {
-                return next(err);
-            }
-
-            locals.data.artists = results;
-            next();
-        });
-    });
-
-    // Load all albums
-    view.on('init', function (next) {
-
-        keystone.list('ArtistAlbum').model.find()
-            .sort('-movementDate')
-            .exec(function (err, results) {
-
-            if (err || !results.length) {
-                return next(err);
-            }
-
-            locals.data.albums = results;
-            next();
-        });
-    });
+    view.query('data.statuses', keystone.list('Status').model.find());
+    view.query('data.artists', keystone.list('Artist').model.find());
+    view.query('data.albums', keystone.list('ArtistAlbum').model.find().sort('-movementDate'));
 
 	// Render the view
 	view.render('index');

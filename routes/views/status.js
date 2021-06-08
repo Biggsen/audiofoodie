@@ -38,45 +38,12 @@ exports = module.exports = function (req, res) {
         });
     });
 
-    view.on('init', function (next) {
-
-        Status.model
-            .find()
-            .exec(function (err, results) {
-
-            if (err || !results.length) { return next(err); }
-            locals.data.statuses = results;
-            next();
-        });
-    });
-
-    // Load all artists
-    view.on('init', function (next) {
-
-        Artist.model
-            .find()
-            .exec(function (err, results) {
-
-            if (err || !results.length) { return next(err); }
-            locals.data.artists = results;
-            next();
-        });
-    });
-
-    // Load all albums
-    view.on('init', function (next) {
-
-        Album.model
-            .find()
-            .where('user', req.user)
-            .populate('status')
-            .exec(function (err, results) {
-
-            if (err || !results.length) { return next(err); }
-            locals.data.albums = results;
-            next();
-        });
-    });
+    view.query('data.statuses', Status.model.find());
+    view.query('data.artists', Artist.model.find());
+    view.query('data.albums', Album.model
+        .find()
+        .where('user', req.user)
+        .populate('status'));
 
     view.on('post', function (next) {
 

@@ -39,14 +39,7 @@ exports = module.exports = function (req, res) {
         });
     });
 
-    // Load all statuses
-    view.on('init', function (next) {
-        Status.model.find().exec(function (err, results) {
-            if (err || !results.length) { return next(err); }
-            locals.data.statuses = results;
-            next();
-        });
-    });
+    view.query('data.statuses', keystone.list('Status').model.find());
 
     // -----------------------------------------
     // ================= VIEW ==================

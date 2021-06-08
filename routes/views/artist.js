@@ -29,9 +29,8 @@ exports = module.exports = function (req, res) {
 	});
 
     // Load artist albums
-    view.on('init', function (next) {
-
-    	if (req.params.artist) {
+	if (req.params.artist) {
+	    view.on('init', function (next) {
 
 	        keystone.list('ArtistAlbum').model.find().where('artist').in([locals.data.artist.id]).sort('year').exec(function (err, results) {
 
@@ -42,40 +41,15 @@ exports = module.exports = function (req, res) {
 	            locals.data.albums = results;
 	            next();
 	        });
-	    } else {
-	    	next();
-	    }
-    });
+	    });
+	}
 
-
-    // Load all statuses
-    view.on('init', function (next) {
-
-        keystone.list('Status').model.find().exec(function (err, results) {
-
-            if (err || !results.length) {
-                return next(err);
-            }
-
-            locals.data.statuses = results;
-            next();
-        });
-    });
-
-	// Load other artists
-	view.on('init', function (next) {
-
-		var q = keystone.list('Artist').model
-            .find()
-            .where('user', req.user)
-            .sort('name');
-
-		q.exec(function (err, results) {
-			locals.data.artists = results;
-			next(err);
-		});
-
-	});
+	view.query('data.statuses', keystone.list('Status').model.find());
+	view.query('data.artists', keystone.list('Artist').model
+		.find()
+		.where('user', req.user)
+		.sort('name')
+	);
 
 	// Render the view
 	view.render('artist');

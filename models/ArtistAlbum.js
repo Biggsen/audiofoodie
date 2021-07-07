@@ -19,7 +19,7 @@ ArtistAlbum.add({
     status: { type: Types.Relationship, ref: 'Status', many: true },
     artist: { type: Types.Relationship, ref: 'Artist', many: true },
     newArtist: { type: Types.Boolean, label: 'Is this a new artist?' },
-    user: { type: Types.Relationship, ref: 'User', many: true},
+    user: { type: Types.Relationship, ref: 'User', many: true },
     filter1Date: { type: Types.Date, default: '' },
     storage1Date: { type: Types.Date, default: '' },
     filter2Date: { type: Types.Date, default: '' },
@@ -31,7 +31,8 @@ ArtistAlbum.add({
     filter5Date: { type: Types.Date, default: '' },
     movement: { type: Types.Boolean, label: 'Flag movement' },
     movementDate: { type: Types.Date, default: '' },
-    rymUrl: { type: String, default: '' }
+    rymUrl: { type: String, default: '' },
+	lastfmUrl: { type: String, default: '' },
 });
 
 ArtistAlbum.relationship({ ref: 'Artist', path: 'artists', refPath: 'album' });

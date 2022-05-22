@@ -1,17 +1,6 @@
-.vote-demote,
-.vote-promote {
-    position: absolute;
-    top: 4px;
-    opacity: 0.2;
-    &:hover {
-        opacity: 1;
-    }
-}
+$base: '.vote';
 
-.vote-demote {
-    left: 12px;
-}
-
-.vote-promote {
-    right: 12px;
+#{$base} {
+    display: flex;
+    justify-content: space-between;
 }

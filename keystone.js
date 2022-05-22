@@ -12,21 +12,21 @@ var nunjucks = require('nunjucks');
 // and documentation.
 
 keystone.init({
-	'name': 'Audio Foodie',
-	'brand': 'AudioFoodie',
+	name: 'Audio Foodie',
+	brand: 'AudioFoodie',
 
-	'sass': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.ico',
-	'views': 'templates/views',
+	sass: 'public',
+	static: 'public',
+	favicon: 'public/favicon.ico',
+	views: 'templates/views',
 	'view engine': '.html',
 	'custom engine': cons.nunjucks,
 
 	'auto update': true,
-	'session': true,
-	'auth': true,
+	session: true,
+	auth: true,
 	'user model': 'User',
-	'env': 'development',
+	env: 'development',
 });
 
 // Load your project's Models
@@ -45,7 +45,6 @@ keystone.set('locals', {
 // Load your project's Routes
 keystone.set('routes', require('./routes'));
 
-
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
 	// posts: ['posts', 'post-categories'],
@@ -58,7 +57,5 @@ keystone.set('nav', {
 });
 
 // Start Keystone to connect to your database and initialise the web server
-
-
 
 keystone.start();

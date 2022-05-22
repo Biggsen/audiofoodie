@@ -30,24 +30,24 @@ keystone.pre('render', middleware.flashMessages);
 
 // Auth0
 var authCheck = jwt({
-  	secret: jwks.expressJwtSecret({
+	secret: jwks.expressJwtSecret({
 		cache: true,
 		rateLimit: true,
 		jwksRequestsPerMinute: 5,
 		// YOUR-AUTH0-DOMAIN name e.g https://prosper.auth0.com
-		jwksUri: "https://audiofoodie.eu.auth0.com/.well-known/jwks.json"
-    }),
-    // This is the identifier we set when we created the API
-    audience: 'https://audiofoodie.herokuapp.com',
-    issuer: 'https://audiofoodie.eu.auth0.com/',
-    algorithms: ['RS256']
+		jwksUri: 'https://audiofoodie.eu.auth0.com/.well-known/jwks.json',
+	}),
+	// This is the identifier we set when we created the API
+	audience: 'https://audiofoodie.herokuapp.com',
+	issuer: 'https://audiofoodie.eu.auth0.com/',
+	algorithms: ['RS256'],
 });
 
 // Import Route Controllers
 var routes = {
 	views: importRoutes('./views'),
 	api: importRoutes('./api'),
-    auth: importRoutes('./auth'),
+	auth: importRoutes('./auth'),
 };
 
 // Setup Route Bindings
@@ -55,18 +55,18 @@ exports = module.exports = function (app) {
 	// Views
 	app.get('/', routes.views.index);
 	app.all('/signin', routes.views.signin);
-    app.all('/signout', routes.views.signout);
-    app.all('/me', routes.views.me);
-	//app.get('/blog/:category?', routes.views.blog);
-	//app.get('/blog/post/:post', routes.views.post);
-	//app.get('/gallery', routes.views.gallery);
-    //app.all('/contact', routes.views.contact);
+	app.all('/signout', routes.views.signout);
+	app.all('/me', routes.views.me);
+	// app.get('/blog/:category?', routes.views.blog);
+	// app.get('/blog/post/:post', routes.views.post);
+	// app.get('/gallery', routes.views.gallery);
+	// app.all('/contact', routes.views.contact);
 	app.all('/audioplate', routes.views.audioplate);
 	app.all('/consumed', routes.views.consumed);
 	app.all('/artist/:artist?', routes.views.artist);
 	app.all('/status/:id?', routes.views.status);
 	app.all('/album/:action?/:key?', routes.views.album);
-    app.all('/auth', routes.auth.auth);
+	app.all('/auth', routes.auth.auth);
 
 	// API
 	app.get('/api/album', routes.api.album.list);
@@ -77,5 +77,4 @@ exports = module.exports = function (app) {
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
-
 };

@@ -70,35 +70,43 @@
                 <div class="grid">
                     {% for album in data.albums %}
                         {% if (status.id == album.status[0].id) and (album._.movementDate.format('YYYY') == movementYear) %}
-                            <div class="pos-rel">
+                            <div class="panel panel-flex panel-default">
                                 <div class="album-profile">
                                     {% if not (status.type == 'storage' or status.name == 'Wonderful') %}
-                                        {{ voteButtons(status,album) }}
+                                        <div class="panel-heading">
+                                            {{ voteButtons(status,album) }} 
+                                        </div>
                                     {% endif %}
-
-
-
                                     <img src="{{ album._.image.fit(260,260) }}" class="img cover">
-                                    <p>
-                                        <a href="/album/view/{{ album.key }}">{{ albumName(album) }}</a><br/>
-                                        {% for artist in data.artists %}
-                                            {% if artist.id == album.artist %}
-                                                {{ artistLink(artist.slug,artist.name,album.newArtist) }}
-                                                <br><br>
-                                                {{ rymLink(artist.slug,album.name,album.rymUrl) }} /
-                                                {{ lyricsLink(artist.slug,album.key) }} /
-                                                {{ lastFMLink(artist.slug,album.name,user.lastFmUsername,album.lastfmUrl) }}
-                                                <br/><span>When: {{ album._[statusType + statusOrder + 'Date'].format("MMMM DD YYYY") }}</span>
-
-                                            {% elseif (album.artist | length) > 1 %}
-                                                {% for item in album.artist %}
-                                                    {% if item == artist.id %}
-                                                        <a href="/artist/{{ artist.slug }}"><strong>{{ artist.name }}</strong></a><br>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </p>
+                                    <div class="panel-body">
+                                        <p>
+                                            <a href="/album/view/{{ album.key }}">{{ albumName(album) }}</a><br/>
+                                            {% for artist in data.artists %}
+                                                {% if artist.id == album.artist %}
+                                                    {{ artistLink(artist.slug,artist.name,album.newArtist) }}
+                                                    <br><br>
+                                                    {{ rymLink(artist.slug,album.name,album.rymUrl) }} /
+                                                    {{ lyricsLink(artist.slug,album.key) }} /
+                                                    {{ lastFMLink(artist.slug,album.name,user.lastFmUsername,album.lastfmUrl) }}
+                                                {% elseif (album.artist | length) > 1 %}
+                                                    {% for item in album.artist %}
+                                                        {% if item == artist.id %}
+                                                            {{ artistLink(artist.slug,artist.name,album.newArtist) }}<br>
+                                                            {% if loop.last %}
+                                                                <br>
+                                                                {{ rymLink(artist.slug,album.name,album.rymUrl) }} /
+                                                                {{ lyricsLink(artist.slug,album.key) }} /
+                                                                {{ lastFMLink(artist.slug,album.name,user.lastFmUsername,album.lastfmUrl) }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                    <div class="panel-footer">
+                                        {{ album._[statusType + statusOrder + 'Date'].format("MMMM DD YYYY") }}
+                                    </div>
                                 </div>
                             </div>
                         {% endif %}

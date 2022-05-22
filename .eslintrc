@@ -1,3 +1,14 @@
 {
-    "extends": "keystone"
+    "extends": "eslint:recommended",
+    "rules":{
+      "linebreak-style": 0
+    },
+    "globals": {
+      "require": true
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    }
 }
